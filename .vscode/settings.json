@@ -1,0 +1,9 @@
+{
+	"java.compile.nullAnalysis.mode": "automatic",
+	"java.configuration.updateBuildConfiguration": "automatic",
+	"editor.formatOnSave": true,
+	"[java]": {
+		"editor.defaultFormatter": "mwpb.java-prettier-formatter"
+	},
+	"java.dependency.packagePresentation": "hierarchical"
+}
