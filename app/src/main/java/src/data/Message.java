@@ -1,16 +1,16 @@
 package src.data;
 
 public enum Message {
-  MSG_PromptPlayer,
-  MSG_PromptComputer,
-  MSG_PlayerWon,
-  MSG_Tied,
-  MSG_Board,
-  ERR_PlayerInvalid,
-  ERR_ComputerInvalid,
+  MSG_PROMPT_PLAYER,
+  MSG_PROMPT_COMPUTER,
+  MSG_PLAYER_WON,
+  MSG_TIED,
+  MSG_BOARD,
+  ERR_PLAYER_INVALID,
+  ERR_COMPUTER_INVALID,
 
-  MSG_PromptMove,
-  ERR_NotANumber,
-  ERR_NumberOutOfRange,
-  ERR_SpaceOccupied,
+  MSG_PROMPT_MOVE,
+  ERR_NOT_A_NUMBER,
+  ERR_NUMBER_OUT_OF_RANGE,
+  ERR_SPACE_OCCUPIED,
 }
