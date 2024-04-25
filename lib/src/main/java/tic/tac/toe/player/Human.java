@@ -15,7 +15,7 @@ public class Human implements Player {
   }
 
   @Nullable
-  public Integer promptMove(Board board, Mark mark) {
+  public Integer getMoveOnce(Board board, Mark mark) {
     var userInput = conn.prompt(Message.MSG_PROMPT_MOVE, mark);
 
     int input;
@@ -45,7 +45,7 @@ public class Human implements Player {
     @Nullable
     Integer move;
     do {
-      move = promptMove(board, mark);
+      move = getMoveOnce(board, mark);
     } while (move == null);
     return move;
   }
