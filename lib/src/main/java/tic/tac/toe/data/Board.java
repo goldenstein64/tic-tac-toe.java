@@ -1,4 +1,4 @@
-package src.data;
+package tic.tac.toe.data;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package src.data;
+package tic.tac.toe.data;
 
 public enum Message {
   MSG_PROMPT_PLAYER,

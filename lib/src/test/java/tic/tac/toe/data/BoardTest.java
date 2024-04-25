@@ -1,4 +1,4 @@
-package src.data;
+package tic.tac.toe.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
