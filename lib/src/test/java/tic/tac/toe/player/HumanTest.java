@@ -55,8 +55,11 @@ public class HumanTest {
 			assertNull(move);
 		}
 
-		void printsNaN(String... inputs) {
-			var conn = new MockConnection(inputs);
+		@Test
+		void printsNaN_onHugeInt() {
+			var conn = new MockConnection(
+				"999999999999999999999999999999999999999999999999999"
+			);
 			var human = new Human(conn);
 			var board = new Board();
 
@@ -71,12 +74,17 @@ public class HumanTest {
 
 		@Test
 		void printsNaN_onBadInput() {
-			printsNaN("@");
-		}
+			var conn = new MockConnection("@");
+			var human = new Human(conn);
+			var board = new Board();
 
-		@Test
-		void printsNaN_onHugeInt() {
-			printsNaN("999999999999999999999999999999999999999999999999999");
+			var move = human.getMoveOnce(board, Mark.X);
+
+			assertEquals(
+				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
+				conn.outputs
+			);
+			assertNull(move);
 		}
 	}
 }
