@@ -41,6 +41,7 @@ public class Human implements Player {
 		return input;
 	}
 
+	@Override
 	public int getMove(Board board, Mark mark) {
 		@Nullable
 		Integer move;
