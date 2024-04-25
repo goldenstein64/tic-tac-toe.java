@@ -10,11 +10,15 @@ import tic.tac.toe.data.Message;
 
 public class MockConnection implements Connection {
 
-  Queue<String> inputs;
-  List<Message> outputs = new ArrayList<Message>();
+  public Queue<String> inputs;
+  public List<Message> outputs = new ArrayList<Message>();
 
   public MockConnection(Collection<String> inputs) {
     this.inputs = new ArrayDeque<String>(inputs);
+  }
+
+  public MockConnection(String... inputs) {
+    this.inputs = new ArrayDeque<String>(List.of(inputs));
   }
 
   @Override
