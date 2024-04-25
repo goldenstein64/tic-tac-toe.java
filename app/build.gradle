@@ -24,6 +24,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.javatuples/javatuples
     implementation 'org.javatuples:javatuples:1.2'
+
+    implementation project(':lib')
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
