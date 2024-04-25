@@ -11,69 +11,72 @@ import tic.tac.toe.util.MockConnection;
 
 public class HumanTest {
 
-	@Test
-	void asksConnForMove() {
-		var conn = new MockConnection("2");
-		var human = new Human(conn);
-		var board = new Board();
+	public static class GetMoveOnce {
 
-		var move = human.getMoveOnce(board, Mark.X);
+		@Test
+		void asksConnForMove() {
+			var conn = new MockConnection("2");
+			var human = new Human(conn);
+			var board = new Board();
 
-		assertEquals(List.of(Message.MSG_PROMPT_MOVE), conn.outputs);
-		assertEquals(1, move);
-	}
+			var move = human.getMoveOnce(board, Mark.X);
 
-	@Test
-	void printsPositionIsOccupied() {
-		var conn = new MockConnection("3");
-		var human = new Human(conn);
-		var board = new Board(",,X,,,,,,");
+			assertEquals(List.of(Message.MSG_PROMPT_MOVE), conn.outputs);
+			assertEquals(1, move);
+		}
 
-		var move = human.getMoveOnce(board, Mark.O);
+		@Test
+		void printsPositionIsOccupied() {
+			var conn = new MockConnection("3");
+			var human = new Human(conn);
+			var board = new Board(",,X,,,,,,");
 
-		assertEquals(
-			List.of(Message.MSG_PROMPT_MOVE, Message.ERR_SPACE_OCCUPIED),
-			conn.outputs
-		);
-		assertNull(move);
-	}
+			var move = human.getMoveOnce(board, Mark.O);
 
-	@Test
-	void printsPositionOutOfRange() {
-		var conn = new MockConnection("0");
-		var human = new Human(conn);
-		var board = new Board();
+			assertEquals(
+				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_SPACE_OCCUPIED),
+				conn.outputs
+			);
+			assertNull(move);
+		}
 
-		var move = human.getMoveOnce(board, Mark.X);
+		@Test
+		void printsPositionOutOfRange() {
+			var conn = new MockConnection("0");
+			var human = new Human(conn);
+			var board = new Board();
 
-		assertEquals(
-			List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NUMBER_OUT_OF_RANGE),
-			conn.outputs
-		);
-		assertNull(move);
-	}
+			var move = human.getMoveOnce(board, Mark.X);
 
-	void printsNaN(String... inputs) {
-		var conn = new MockConnection(inputs);
-		var human = new Human(conn);
-		var board = new Board();
+			assertEquals(
+				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NUMBER_OUT_OF_RANGE),
+				conn.outputs
+			);
+			assertNull(move);
+		}
 
-		var move = human.getMoveOnce(board, Mark.X);
+		void printsNaN(String... inputs) {
+			var conn = new MockConnection(inputs);
+			var human = new Human(conn);
+			var board = new Board();
 
-		assertEquals(
-			List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
-			conn.outputs
-		);
-		assertNull(move);
-	}
+			var move = human.getMoveOnce(board, Mark.X);
 
-	@Test
-	void printsNaN_onBadInput() {
-		printsNaN("@");
-	}
+			assertEquals(
+				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
+				conn.outputs
+			);
+			assertNull(move);
+		}
 
-	@Test
-	void printsNaN_onHugeInt() {
-		printsNaN("999999999999999999999999999999999999999999999999999");
+		@Test
+		void printsNaN_onBadInput() {
+			printsNaN("@");
+		}
+
+		@Test
+		void printsNaN_onHugeInt() {
+			printsNaN("999999999999999999999999999999999999999999999999999");
+		}
 	}
 }
