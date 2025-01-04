@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Random;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Mark;
 
 public class CommonTactics {
-
 	public static Stream<Object[]> testCases() {
 		return Stream.<Object[]>of(
 				new Object[] { ",XX,OO,,,", Mark.X, 0 }, // X winning move
