@@ -3,18 +3,18 @@ package tic.tac.toe.player;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Mark;
 
-public class MediumComputer implements Player {
+public class MediumComputer extends Computer {
 	public static final List<Integer> CENTER = List.of(4);
 	public static final List<Integer> CORNERS = List.of(0, 2, 6, 8);
 	public static final List<Integer> SIDES = List.of(1, 3, 5, 7);
 
-	public static final List<List<List<Integer>>> WIN_PATTERNS_FOR = Stream
-			.iterate(0, i -> i + 1)
-			.limit(Board.SIZE)
+	public static final List<List<List<Integer>>> WIN_PATTERNS_FOR = IntStream
+			.range(0, Board.SIZE).boxed()
 			.map(i -> Board.WIN_PATTERNS
 					.stream()
 					.filter(p -> p.contains(i))
@@ -22,10 +22,8 @@ public class MediumComputer implements Player {
 					.toList())
 			.toList();
 
-	private Random rng;
-
 	public MediumComputer(Random rng) {
-		this.rng = rng;
+		super(rng);
 	}
 
 	private <T> Optional<List<T>> listOptionOf(List<T> list) {
@@ -91,15 +89,13 @@ public class MediumComputer implements Player {
 	}
 
 	@Override
-	public int getMove(Board board, Mark mark) {
-		var moves = getWinningMoves(board, mark)
+	public List<Integer> getMoves(Board board, Mark mark) {
+		return getWinningMoves(board, mark)
 				.or(() -> getBlockingMoves(board, mark))
 				.or(() -> getTrappingMoves(board, mark))
 				.or(() -> getCenterMove(board, mark))
 				.or(() -> getCornerMoves(board, mark))
 				.or(() -> getSideMoves(board, mark))
 				.orElseThrow();
-
-		return moves.get(rng.nextInt(moves.size()));
 	}
 }

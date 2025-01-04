@@ -2,7 +2,6 @@ package tic.tac.toe.player;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.BinaryOperator;
@@ -14,7 +13,7 @@ import com.google.common.collect.Streams;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Mark;
 
-public class HardComputer implements Player {
+public class HardComputer extends Computer {
     static record Equality(int a, int b) {
     }
 
@@ -135,7 +134,7 @@ public class HardComputer implements Player {
         }
     }
 
-    static int judge(Board board, Mark mark) {
+    private static int judge(Board board, Mark mark) {
         final var terminal = terminal(board);
         final var otherMark = mark.other();
 
@@ -145,7 +144,8 @@ public class HardComputer implements Player {
                 .reduce(controls(mark), reconcilers(mark)));
     }
 
-    public static List<Integer> getMoves(Board board, Mark mark) {
+    @Override
+    public List<Integer> getMoves(Board board, Mark mark) {
         final var otherMark = mark.other();
 
         final var actions = simpleActions(board).toList();
@@ -164,21 +164,12 @@ public class HardComputer implements Player {
                 .toList();
     }
 
-    Random rng;
-
     public HardComputer(Random rng) {
-        this.rng = rng;
+        super(rng);
     }
 
+    @Override
     public int getMove(Board board, Mark mark) {
-        if (board.empty()) {
-            return rng.nextInt(Board.SIZE);
-        } else {
-            final var moves = getMoves(board, mark);
-            if (moves.size() <= 0) {
-                throw new NoSuchElementException("no moves to take!");
-            }
-            return moves.get(rng.nextInt(moves.size()));
-        }
+        return board.empty() ? rng.nextInt(Board.SIZE) : super.getMove(board, mark);
     }
 }
