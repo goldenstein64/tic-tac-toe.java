@@ -35,4 +35,15 @@ public class CommonTactics {
 
 		assertEquals(expected, move);
 	}
+
+	@ParameterizedTest
+	@MethodSource("testCases")
+	void HCpassesAllTests(String pattern, Mark mark, int expected) {
+		var board = new Board(pattern);
+		var computer = new HardComputer(new Random());
+
+		var move = computer.getMove(board, mark);
+
+		assertEquals(expected, move);
+	}
 }

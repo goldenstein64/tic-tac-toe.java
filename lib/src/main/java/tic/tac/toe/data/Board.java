@@ -46,6 +46,10 @@ public class Board {
 		data = new ArrayList<Mark>(stream.toList());
 	}
 
+	public Board(Board board) {
+		data = new ArrayList<Mark>(board.data);
+	}
+
 	public boolean empty() {
 		return data.stream().allMatch(m -> m == null);
 	}
