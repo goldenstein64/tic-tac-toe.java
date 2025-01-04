@@ -70,13 +70,9 @@ public class Application {
     private Optional<EndedResult> playTurn(Player player, Mark mark) {
         var move = player.getMove(board, mark);
         board.set(move, mark);
-        if (board.won(mark)) {
-            return Optional.of(new EndedResult(Optional.of(mark)));
-        } else if (board.full()) {
-            return Optional.of(new EndedResult(Optional.empty()));
-        } else {
-            return Optional.empty();
-        }
+        return board.won(mark) ? Optional.of(new EndedResult(Optional.of(mark)))
+                : board.full() ? Optional.of(new EndedResult(Optional.empty()))
+                        : Optional.empty();
     }
 
     public Optional<Mark> playGame(List<Player> players) {
