@@ -1,7 +1,5 @@
 package tic.tac.toe.data;
 
-import java.util.Optional;
-
 public sealed interface Message {
 	public final record MSG_PromptPlayer(Mark mark) implements Message {
 	}
@@ -9,7 +7,7 @@ public sealed interface Message {
 	public final record MSG_PromptComputer(Mark mark) implements Message {
 	}
 
-	public final record MSG_PlayerWon(Optional<Mark> winner) implements Message {
+	public final record MSG_PlayerWon(Mark winner) implements Message {
 	}
 
 	public final class MSG_Tied implements Message {
@@ -19,7 +17,7 @@ public sealed interface Message {
 		};
 	}
 
-	public final record MSG_Board(Board board) implements Message {
+	public final record MSG_Board(String pattern) implements Message {
 	}
 
 	public final record ERR_PlayerInvalid(String input) implements Message {
