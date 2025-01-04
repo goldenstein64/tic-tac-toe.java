@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Mark;
 import tic.tac.toe.data.Message;
+import tic.tac.toe.data.MessageException;
 import tic.tac.toe.util.MockConnection;
 
 public class HumanTest {
@@ -14,14 +15,14 @@ public class HumanTest {
 	public static class GetMoveOnce {
 
 		@Test
-		void asksConnForMove() {
+		void asksConnForMove() throws MessageException {
 			var conn = new MockConnection("2");
 			var human = new Human(conn);
 			var board = new Board();
 
 			var move = human.getMoveOnce(board, Mark.X);
 
-			assertEquals(List.of(Message.MSG_PROMPT_MOVE), conn.outputs);
+			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
 			assertEquals(1, move);
 		}
 
@@ -31,12 +32,12 @@ public class HumanTest {
 			var human = new Human(conn);
 			var board = new Board(",,X,,,,,,");
 
-			var move = human.getMoveOnce(board, Mark.O);
+			var exception = assertThrows(
+					MessageException.class,
+					() -> human.getMoveOnce(board, Mark.O));
 
-			assertEquals(
-					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_SPACE_OCCUPIED),
-					conn.outputs);
-			assertNull(move);
+			assertEquals(exception.message, new Message.ERR_SpaceOccupied(3));
+			assertEquals(List.of(new Message.MSG_PromptMove(Mark.O)), conn.outputs);
 		}
 
 		@Test
@@ -45,27 +46,27 @@ public class HumanTest {
 			var human = new Human(conn);
 			var board = new Board();
 
-			var move = human.getMoveOnce(board, Mark.X);
+			var exception = assertThrows(
+					MessageException.class,
+					() -> human.getMoveOnce(board, Mark.X));
 
-			assertEquals(
-					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NUMBER_OUT_OF_RANGE),
-					conn.outputs);
-			assertNull(move);
+			assertEquals(exception.message, new Message.ERR_NumberOutOfRange(0));
+			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
 		}
 
 		@Test
-		void printsNaN_onHugeInt() {
-			var conn = new MockConnection(
-					"999999999999999999999999999999999999999999999999999");
+		void printsNaN_onHugeInt() throws MessageException {
+			var input = "999999999999999999999999999999999999999999999999999";
+			var conn = new MockConnection(input);
 			var human = new Human(conn);
 			var board = new Board();
 
-			var move = human.getMoveOnce(board, Mark.X);
+			var exception = assertThrows(
+					MessageException.class,
+					() -> human.getMoveOnce(board, Mark.X));
 
-			assertEquals(
-					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
-					conn.outputs);
-			assertNull(move);
+			assertEquals(exception.message, new Message.ERR_NotANumber(input));
+			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
 		}
 
 		@Test
@@ -74,12 +75,12 @@ public class HumanTest {
 			var human = new Human(conn);
 			var board = new Board();
 
-			var move = human.getMoveOnce(board, Mark.X);
+			var exception = assertThrows(
+					MessageException.class,
+					() -> human.getMoveOnce(board, Mark.X));
 
-			assertEquals(
-					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
-					conn.outputs);
-			assertNull(move);
+			assertEquals(exception.message, new Message.ERR_NotANumber("@"));
+			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
 		}
 	}
 }

@@ -1,10 +1,10 @@
 package tic.tac.toe.player;
 
-import javax.annotation.Nullable;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Connection;
 import tic.tac.toe.data.Mark;
 import tic.tac.toe.data.Message;
+import tic.tac.toe.data.MessageException;
 
 public class Human implements Player {
 
@@ -14,40 +14,35 @@ public class Human implements Player {
 		this.conn = conn;
 	}
 
-	@Nullable
-	public Integer getMoveOnce(Board board, Mark mark) {
-		var userInput = conn.prompt(Message.MSG_PROMPT_MOVE, mark);
+	public int getMoveOnce(Board board, Mark mark) throws MessageException {
+		var userInput = conn.prompt(new Message.MSG_PromptMove(mark));
 
 		int input;
 		try {
 			input = Integer.parseInt(userInput);
 		} catch (NumberFormatException e) {
-			conn.print(Message.ERR_NOT_A_NUMBER);
-			return null;
+			throw new MessageException(new Message.ERR_NotANumber(userInput));
 		}
 
-		input -= 1;
-
-		if (input < 0 || input >= Board.SIZE) {
-			conn.print(Message.ERR_NUMBER_OUT_OF_RANGE);
-			return null;
+		if (input < 1 || input > Board.SIZE) {
+			throw new MessageException(new Message.ERR_NumberOutOfRange(input));
 		}
 
-		if (!board.canMark(input)) {
-			conn.print(Message.ERR_SPACE_OCCUPIED);
-			return null;
+		if (!board.canMark(input - 1)) {
+			throw new MessageException(new Message.ERR_SpaceOccupied(input));
 		}
 
-		return input;
+		return input - 1;
 	}
 
 	@Override
 	public int getMove(Board board, Mark mark) {
-		@Nullable
-		Integer move;
-		do {
-			move = getMoveOnce(board, mark);
-		} while (move == null);
-		return move;
+		while (true) {
+			try {
+				return getMoveOnce(board, mark);
+			} catch (MessageException exception) {
+				conn.print(exception.message);
+			}
+		}
 	}
 }

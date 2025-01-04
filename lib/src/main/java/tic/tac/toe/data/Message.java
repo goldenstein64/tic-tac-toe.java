@@ -1,16 +1,42 @@
 package tic.tac.toe.data;
 
-public enum Message {
-	MSG_PROMPT_PLAYER,
-	MSG_PROMPT_COMPUTER,
-	MSG_PLAYER_WON,
-	MSG_TIED,
-	MSG_BOARD,
-	ERR_PLAYER_INVALID,
-	ERR_COMPUTER_INVALID,
+import java.util.Optional;
 
-	MSG_PROMPT_MOVE,
-	ERR_NOT_A_NUMBER,
-	ERR_NUMBER_OUT_OF_RANGE,
-	ERR_SPACE_OCCUPIED,
+public sealed interface Message {
+	public final record MSG_PromptPlayer(Mark mark) implements Message {
+	}
+
+	public final record MSG_PromptComputer(Mark mark) implements Message {
+	}
+
+	public final record MSG_PlayerWon(Optional<Mark> winner) implements Message {
+	}
+
+	public final class MSG_Tied implements Message {
+		public static final MSG_Tied INSTANCE = new MSG_Tied();
+
+		private MSG_Tied() {
+		};
+	}
+
+	public final record MSG_Board(Board board) implements Message {
+	}
+
+	public final record ERR_PlayerInvalid(String input) implements Message {
+	}
+
+	public final record ERR_ComputerInvalid(String input) implements Message {
+	}
+
+	public final record MSG_PromptMove(Mark mark) implements Message {
+	}
+
+	public final record ERR_NotANumber(String input) implements Message {
+	}
+
+	public final record ERR_NumberOutOfRange(int choice) implements Message {
+	}
+
+	public final record ERR_SpaceOccupied(int choice) implements Message {
+	}
 }

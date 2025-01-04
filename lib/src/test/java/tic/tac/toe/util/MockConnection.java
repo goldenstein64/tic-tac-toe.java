@@ -22,12 +22,12 @@ public class MockConnection implements Connection {
 	}
 
 	@Override
-	public void print(Message message, Object... args) {
+	public void print(Message message) {
 		outputs.add(message);
 	}
 
 	@Override
-	public String prompt(Message message, Object... args) {
+	public String prompt(Message message) {
 		outputs.add(message);
 		return inputs.remove();
 	}
