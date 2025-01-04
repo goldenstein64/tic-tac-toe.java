@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import tic.tac.toe.data.Mark;
-import tic.tac.toe.data.Message;
+import tic.tac.toe.data.Message.*;
 import tic.tac.toe.data.MessageException;
 import tic.tac.toe.player.EasyComputer;
 import tic.tac.toe.player.HardComputer;
@@ -25,8 +25,8 @@ public class ApplicationTest {
 
             assertInstanceOf(HardComputer.class, chosenPlayer);
             assertEquals(List.of(
-                    new Message.MSG_PromptPlayer(Mark.X),
-                    new Message.MSG_PromptComputer(Mark.X)),
+                    new MSG_PromptPlayer(Mark.X),
+                    new MSG_PromptComputer(Mark.X)),
                     conn.outputs);
         }
 
@@ -38,8 +38,8 @@ public class ApplicationTest {
 
             assertInstanceOf(MediumComputer.class, chosenPlayer);
             assertEquals(List.of(
-                    new Message.MSG_PromptPlayer(Mark.X),
-                    new Message.MSG_PromptComputer(Mark.X)),
+                    new MSG_PromptPlayer(Mark.X),
+                    new MSG_PromptComputer(Mark.X)),
                     conn.outputs);
         }
 
@@ -51,8 +51,8 @@ public class ApplicationTest {
 
             assertInstanceOf(EasyComputer.class, chosenPlayer);
             assertEquals(List.of(
-                    new Message.MSG_PromptPlayer(Mark.X),
-                    new Message.MSG_PromptComputer(Mark.X)),
+                    new MSG_PromptPlayer(Mark.X),
+                    new MSG_PromptComputer(Mark.X)),
                     conn.outputs);
         }
 
@@ -63,7 +63,7 @@ public class ApplicationTest {
             var chosenPlayer = app.choosePlayerOnce(Mark.X);
 
             assertInstanceOf(Human.class, chosenPlayer);
-            assertEquals(List.of(new Message.MSG_PromptPlayer(Mark.X)), conn.outputs);
+            assertEquals(List.of(new MSG_PromptPlayer(Mark.X)), conn.outputs);
         }
 
         @Test
@@ -74,10 +74,10 @@ public class ApplicationTest {
                     MessageException.class,
                     () -> app.choosePlayerOnce(Mark.X));
 
-            assertEquals(exception.message, new Message.ERR_ComputerInvalid("@"));
+            assertEquals(exception.message, new ERR_ComputerInvalid("@"));
             assertEquals(List.of(
-                    new Message.MSG_PromptPlayer(Mark.X),
-                    new Message.MSG_PromptComputer(Mark.X)),
+                    new MSG_PromptPlayer(Mark.X),
+                    new MSG_PromptComputer(Mark.X)),
                     conn.outputs);
         }
 
@@ -89,8 +89,8 @@ public class ApplicationTest {
                     MessageException.class,
                     () -> app.choosePlayerOnce(Mark.X));
 
-            assertEquals(exception.message, new Message.ERR_PlayerInvalid("@"));
-            assertEquals(List.of(new Message.MSG_PromptPlayer(Mark.X)), conn.outputs);
+            assertEquals(exception.message, new ERR_PlayerInvalid("@"));
+            assertEquals(List.of(new MSG_PromptPlayer(Mark.X)), conn.outputs);
         }
     }
 
@@ -103,9 +103,9 @@ public class ApplicationTest {
 
             assertInstanceOf(Human.class, chosenPlayer);
             assertEquals(List.of(
-                    new Message.MSG_PromptPlayer(Mark.X),
-                    new Message.ERR_PlayerInvalid("#"),
-                    new Message.MSG_PromptPlayer(Mark.X)),
+                    new MSG_PromptPlayer(Mark.X),
+                    new ERR_PlayerInvalid("#"),
+                    new MSG_PromptPlayer(Mark.X)),
                     conn.outputs);
         }
 
@@ -117,10 +117,10 @@ public class ApplicationTest {
 
             assertInstanceOf(Human.class, chosenPlayer);
             assertEquals(List.of(
-                    new Message.MSG_PromptPlayer(Mark.X),
-                    new Message.MSG_PromptComputer(Mark.X),
-                    new Message.ERR_ComputerInvalid("@"),
-                    new Message.MSG_PromptPlayer(Mark.X)),
+                    new MSG_PromptPlayer(Mark.X),
+                    new MSG_PromptComputer(Mark.X),
+                    new ERR_ComputerInvalid("@"),
+                    new MSG_PromptPlayer(Mark.X)),
                     conn.outputs);
         }
     }

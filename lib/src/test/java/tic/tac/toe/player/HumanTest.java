@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Mark;
-import tic.tac.toe.data.Message;
+import tic.tac.toe.data.Message.*;
 import tic.tac.toe.data.MessageException;
 import tic.tac.toe.util.MockConnection;
 
@@ -22,7 +22,7 @@ public class HumanTest {
 
 			var move = human.getMoveOnce(board, Mark.X);
 
-			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
+			assertEquals(List.of(new MSG_PromptMove(Mark.X)), conn.outputs);
 			assertEquals(1, move);
 		}
 
@@ -36,8 +36,8 @@ public class HumanTest {
 					MessageException.class,
 					() -> human.getMoveOnce(board, Mark.O));
 
-			assertEquals(exception.message, new Message.ERR_SpaceOccupied(3));
-			assertEquals(List.of(new Message.MSG_PromptMove(Mark.O)), conn.outputs);
+			assertEquals(exception.message, new ERR_SpaceOccupied(3));
+			assertEquals(List.of(new MSG_PromptMove(Mark.O)), conn.outputs);
 		}
 
 		@Test
@@ -50,8 +50,8 @@ public class HumanTest {
 					MessageException.class,
 					() -> human.getMoveOnce(board, Mark.X));
 
-			assertEquals(exception.message, new Message.ERR_NumberOutOfRange(0));
-			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
+			assertEquals(exception.message, new ERR_NumberOutOfRange(0));
+			assertEquals(List.of(new MSG_PromptMove(Mark.X)), conn.outputs);
 		}
 
 		@Test
@@ -65,8 +65,8 @@ public class HumanTest {
 					MessageException.class,
 					() -> human.getMoveOnce(board, Mark.X));
 
-			assertEquals(exception.message, new Message.ERR_NotANumber(input));
-			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
+			assertEquals(exception.message, new ERR_NotANumber(input));
+			assertEquals(List.of(new MSG_PromptMove(Mark.X)), conn.outputs);
 		}
 
 		@Test
@@ -79,8 +79,8 @@ public class HumanTest {
 					MessageException.class,
 					() -> human.getMoveOnce(board, Mark.X));
 
-			assertEquals(exception.message, new Message.ERR_NotANumber("@"));
-			assertEquals(List.of(new Message.MSG_PromptMove(Mark.X)), conn.outputs);
+			assertEquals(exception.message, new ERR_NotANumber("@"));
+			assertEquals(List.of(new MSG_PromptMove(Mark.X)), conn.outputs);
 		}
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Random;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Connection;
 import tic.tac.toe.data.Mark;
-import tic.tac.toe.data.Message;
+import tic.tac.toe.data.Message.*;
 import tic.tac.toe.data.MessageException;
 import tic.tac.toe.player.Computer;
 import tic.tac.toe.player.EasyComputer;
@@ -29,21 +29,21 @@ public class Application {
     }
 
     private Computer chooseComputerOnce(Mark mark) throws MessageException {
-        var userInput = conn.prompt(new Message.MSG_PromptComputer(mark));
+        var userInput = conn.prompt(new MSG_PromptComputer(mark));
         return switch (userInput) {
             case "E" -> new EasyComputer(new Random());
             case "M" -> new MediumComputer(new Random());
             case "H" -> new HardComputer(new Random());
-            default -> throw new MessageException(new Message.ERR_ComputerInvalid(userInput));
+            default -> throw new MessageException(new ERR_ComputerInvalid(userInput));
         };
     }
 
     public Player choosePlayerOnce(Mark mark) throws MessageException {
-        var userInput = conn.prompt(new Message.MSG_PromptPlayer(mark));
+        var userInput = conn.prompt(new MSG_PromptPlayer(mark));
         return switch (userInput) {
             case "H" -> new Human(conn);
             case "C" -> chooseComputerOnce(mark);
-            default -> throw new MessageException(new Message.ERR_PlayerInvalid(userInput));
+            default -> throw new MessageException(new ERR_PlayerInvalid(userInput));
         };
     }
 
