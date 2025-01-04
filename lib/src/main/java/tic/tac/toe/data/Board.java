@@ -3,6 +3,7 @@ package tic.tac.toe.data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
@@ -30,8 +31,13 @@ public class Board {
 	private List<Mark> data;
 
 	public Board() {
-		var stream = Stream.<Mark>generate(() -> null).limit(SIZE);
-		data = new ArrayList<Mark>(stream.toList());
+		this.data = new ArrayList<Mark>(Stream.<Mark>generate(() -> null).limit(SIZE).toList());
+	}
+
+	public Board(List<Optional<Mark>> data) {
+		this.data = new ArrayList<Mark>(data.stream()
+				.map(opt -> opt.orElse(null))
+				.toList());
 	}
 
 	public Board(String pattern) {
@@ -43,11 +49,11 @@ public class Board {
 					case 'O' -> Mark.O;
 					default -> null;
 				});
-		data = new ArrayList<Mark>(stream.toList());
+		this.data = new ArrayList<Mark>(stream.toList());
 	}
 
 	public Board(Board board) {
-		data = new ArrayList<Mark>(board.data);
+		this.data = new ArrayList<Mark>(board.data);
 	}
 
 	public boolean empty() {
@@ -77,11 +83,23 @@ public class Board {
 
 	public void set(int pos, @Nullable Mark mark) {
 		if (pos < 0 || pos >= SIZE) {
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException("slot is out of bounds!");
 		} else if (data.get(pos) != null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("slot is occupied!");
 		}
 		data.set(pos, mark);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		} else if (!(object instanceof Board)) {
+			return false;
+		} else {
+			Board other = (Board) object;
+			return this.data.equals(other.data);
+		}
 	}
 
 	@Nullable
@@ -89,13 +107,13 @@ public class Board {
 		return data.get(pos);
 	}
 
+	@Override
 	public String toString() {
 		return data
 				.stream()
-				.<Character>map(m -> switch (m) {
+				.<Character>map(m -> m == null ? ',' : switch (m) {
 					case X -> 'X';
 					case O -> 'O';
-					default -> ',';
 				})
 				.collect(STRING_COLLECTOR);
 	}
