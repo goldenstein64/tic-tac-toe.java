@@ -249,7 +249,9 @@ public class ApplicationTest {
             var conn = new MockConnection();
             var app = new Application(conn);
 
-            app.playGame(List.of(new MediumComputer(new Random()), new MediumComputer(new Random())));
+            app.playGame(List.of(
+                    new MediumComputer(new Random()),
+                    new MediumComputer(new Random())));
 
             assertTrue(conn.outputs.contains(new MSG_Board(",,,,,,,,,")));
         }
