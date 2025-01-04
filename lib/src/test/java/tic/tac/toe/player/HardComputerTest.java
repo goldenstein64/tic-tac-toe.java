@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -18,34 +19,46 @@ import tic.tac.toe.data.Mark;
 
 public class HardComputerTest {
     public static class TerminalTest {
+        @Test
         public void fullBoardReturnsZero() {
             var board = new Board("OXXXOOOXX");
             var terminal = HardComputer.terminal(board);
-            assertEquals(0, terminal);
+            assertEquals(Optional.of(0), terminal);
         }
 
+        @Test
         public void boardThatXWonReturnsOne() {
             var board = new Board("X,,XOOX,,");
             var terminal = HardComputer.terminal(board);
-            assertEquals(1, terminal);
+            assertEquals(Optional.of(1), terminal);
         }
 
+        @Test
         public void fullBoardThatXWonReturnsOne() {
             var board = new Board("XXXXOOOXO");
             var terminal = HardComputer.terminal(board);
-            assertEquals(1, terminal);
+            assertEquals(Optional.of(1), terminal);
         }
 
+        @Test
         public void boardThatOWonReturnsNegOne() {
             var board = new Board("O,,OXXO,X");
             var terminal = HardComputer.terminal(board);
-            assertEquals(-1, terminal);
+            assertEquals(Optional.of(-1), terminal);
         }
 
+        @Test
         public void fullBoardThatOWonReturnsNegOne() {
             var board = new Board("XXOXOXOOX");
             var terminal = HardComputer.terminal(board);
-            assertEquals(-1, terminal);
+            assertEquals(Optional.of(-1), terminal);
+        }
+
+        @Test
+        public void inProgressBoardReturnsEmpty() {
+            var board = new Board("XX,OO,XX,");
+            var terminal = HardComputer.terminal(board);
+            assertEquals(Optional.empty(), terminal);
         }
     }
 
