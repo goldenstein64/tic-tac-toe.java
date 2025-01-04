@@ -1,5 +1,8 @@
 package tic.tac.toe;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import tic.tac.toe.data.Board;
@@ -17,6 +20,9 @@ import tic.tac.toe.player.Player;
 public class Application {
     private Connection conn;
     private Board board;
+
+    private static record EndedResult(Optional<Mark> winner) {
+    }
 
     public Application(Connection conn) {
         this.conn = conn;
@@ -55,5 +61,42 @@ public class Application {
                 conn.print(exception.message);
             }
         }
+    }
+
+    public List<Player> choosePlayers() {
+        return Arrays.stream(Mark.values()).map(this::choosePlayer).toList();
+    }
+
+    private Optional<EndedResult> playTurn(Player player, Mark mark) {
+        var move = player.getMove(board, mark);
+        board.set(move, mark);
+        if (board.won(mark)) {
+            return Optional.of(new EndedResult(Optional.of(mark)));
+        } else if (board.full()) {
+            return Optional.of(new EndedResult(Optional.empty()));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Mark> playGame(List<Player> players) {
+        var currentIndex = 0;
+        conn.print(new MSG_Board(board.toString()));
+        while (true) {
+            var mark = currentIndex % 2 == 0 ? Mark.X : Mark.O;
+            var player = players.get(currentIndex);
+            var result = playTurn(player, mark);
+            conn.print(new MSG_Board(board.toString()));
+            if (result.isPresent()) {
+                return result.get().winner;
+            }
+            currentIndex = (currentIndex + 1) % 2;
+        }
+    }
+
+    public void displayWinner(Optional<Mark> winner) {
+        winner.ifPresentOrElse(
+                (mark) -> conn.print(new MSG_PlayerWon(mark)),
+                () -> conn.print(MSG_Tied.INSTANCE));
     }
 }
