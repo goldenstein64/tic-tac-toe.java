@@ -34,9 +34,8 @@ public class HumanTest {
 			var move = human.getMoveOnce(board, Mark.O);
 
 			assertEquals(
-				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_SPACE_OCCUPIED),
-				conn.outputs
-			);
+					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_SPACE_OCCUPIED),
+					conn.outputs);
 			assertNull(move);
 		}
 
@@ -49,26 +48,23 @@ public class HumanTest {
 			var move = human.getMoveOnce(board, Mark.X);
 
 			assertEquals(
-				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NUMBER_OUT_OF_RANGE),
-				conn.outputs
-			);
+					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NUMBER_OUT_OF_RANGE),
+					conn.outputs);
 			assertNull(move);
 		}
 
 		@Test
 		void printsNaN_onHugeInt() {
 			var conn = new MockConnection(
-				"999999999999999999999999999999999999999999999999999"
-			);
+					"999999999999999999999999999999999999999999999999999");
 			var human = new Human(conn);
 			var board = new Board();
 
 			var move = human.getMoveOnce(board, Mark.X);
 
 			assertEquals(
-				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
-				conn.outputs
-			);
+					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
+					conn.outputs);
 			assertNull(move);
 		}
 
@@ -81,9 +77,8 @@ public class HumanTest {
 			var move = human.getMoveOnce(board, Mark.X);
 
 			assertEquals(
-				List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
-				conn.outputs
-			);
+					List.of(Message.MSG_PROMPT_MOVE, Message.ERR_NOT_A_NUMBER),
+					conn.outputs);
 			assertNull(move);
 		}
 	}

@@ -21,11 +21,9 @@ public class BoardTest {
 		}
 
 		@ParameterizedTest
-		@ValueSource(
-			strings = {
+		@ValueSource(strings = {
 				"XO,XO,XO,", "XXXXXXXX,", ",XXXXXXXX", "X,,,,,,,,", ",,,,,,,,X",
-			}
-		)
+		})
 		void detectsNonEmpty(String pattern) {
 			var board = new Board(pattern);
 			assertFalse(board.empty());
@@ -42,11 +40,9 @@ public class BoardTest {
 		}
 
 		@ParameterizedTest
-		@ValueSource(
-			strings = {
+		@ValueSource(strings = {
 				"XO,XO,XO,", "XXXXXXXX,", ",XXXXXXXX", "X,,,,,,,,", ",,,,,,,,X",
-			}
-		)
+		})
 		void detectsNotFull(String pattern) {
 			var board = new Board(pattern);
 			assertFalse(board.full());
@@ -57,13 +53,12 @@ public class BoardTest {
 
 		static Stream<Arguments> provideBadPos() {
 			return Stream.of(
-				Arguments.of(-1, false),
-				Arguments.of(0, true),
-				Arguments.of(1, true),
-				Arguments.of(7, true),
-				Arguments.of(8, true),
-				Arguments.of(9, false)
-			);
+					Arguments.of(-1, false),
+					Arguments.of(0, true),
+					Arguments.of(1, true),
+					Arguments.of(7, true),
+					Arguments.of(8, true),
+					Arguments.of(9, false));
 		}
 
 		@ParameterizedTest
@@ -74,16 +69,15 @@ public class BoardTest {
 
 		static Stream<Arguments> provideMarkMatch() {
 			return Stream.of(
-				Arguments.of(0, Mark.X, true),
-				Arguments.of(0, Mark.O, false),
-				Arguments.of(0, null, false),
-				Arguments.of(1, Mark.X, false),
-				Arguments.of(1, Mark.O, true),
-				Arguments.of(1, null, false),
-				Arguments.of(2, Mark.X, false),
-				Arguments.of(2, Mark.O, false),
-				Arguments.of(2, null, true)
-			);
+					Arguments.of(0, Mark.X, true),
+					Arguments.of(0, Mark.O, false),
+					Arguments.of(0, null, false),
+					Arguments.of(1, Mark.X, false),
+					Arguments.of(1, Mark.O, true),
+					Arguments.of(1, null, false),
+					Arguments.of(2, Mark.X, false),
+					Arguments.of(2, Mark.O, false),
+					Arguments.of(2, null, true));
 		}
 
 		@ParameterizedTest
@@ -98,16 +92,15 @@ public class BoardTest {
 
 		static Stream<Arguments> provideMatchNull() {
 			return Stream.of(
-				Arguments.of(0, false),
-				Arguments.of(1, false),
-				Arguments.of(2, true),
-				Arguments.of(3, false),
-				Arguments.of(4, false),
-				Arguments.of(5, true),
-				Arguments.of(6, false),
-				Arguments.of(7, false),
-				Arguments.of(8, true)
-			);
+					Arguments.of(0, false),
+					Arguments.of(1, false),
+					Arguments.of(2, true),
+					Arguments.of(3, false),
+					Arguments.of(4, false),
+					Arguments.of(5, true),
+					Arguments.of(6, false),
+					Arguments.of(7, false),
+					Arguments.of(8, true));
 		}
 
 		@ParameterizedTest
@@ -134,9 +127,8 @@ public class BoardTest {
 			var board = new Board();
 
 			assertThrows(
-				IndexOutOfBoundsException.class,
-				() -> board.set(-1, Mark.X)
-			);
+					IndexOutOfBoundsException.class,
+					() -> board.set(-1, Mark.X));
 
 			board.set(0, Mark.X);
 		}

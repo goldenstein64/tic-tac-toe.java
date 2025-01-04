@@ -11,23 +11,21 @@ import javax.annotation.Nullable;
 public class Board {
 
 	private static final Collector<Character, StringBuilder, String> STRING_COLLECTOR = Collector.of(
-		StringBuilder::new,
-		StringBuilder::append,
-		StringBuilder::append,
-		StringBuilder::toString
-	);
+			StringBuilder::new,
+			StringBuilder::append,
+			StringBuilder::append,
+			StringBuilder::toString);
 
 	public static final int SIZE = 9;
 	public static final List<List<Integer>> WIN_PATTERNS = List.of(
-		List.of(0, 1, 2),
-		List.of(3, 4, 5),
-		List.of(6, 7, 8),
-		List.of(0, 3, 6),
-		List.of(1, 4, 7),
-		List.of(2, 5, 8),
-		List.of(2, 4, 6),
-		List.of(0, 4, 8)
-	);
+			List.of(0, 1, 2),
+			List.of(3, 4, 5),
+			List.of(6, 7, 8),
+			List.of(0, 3, 6),
+			List.of(1, 4, 7),
+			List.of(2, 5, 8),
+			List.of(2, 4, 6),
+			List.of(0, 4, 8));
 
 	private List<Mark> data;
 
@@ -38,15 +36,13 @@ public class Board {
 
 	public Board(String pattern) {
 		var stream = pattern
-			.chars()
-			.limit(SIZE)
-			.<Mark>mapToObj(c ->
-				switch (c) {
+				.chars()
+				.limit(SIZE)
+				.<Mark>mapToObj(c -> switch (c) {
 					case 'X' -> Mark.X;
 					case 'O' -> Mark.O;
 					default -> null;
-				}
-			);
+				});
 		data = new ArrayList<Mark>(stream.toList());
 	}
 
@@ -60,13 +56,11 @@ public class Board {
 
 	public boolean won(@Nonnull Mark mark) {
 		return WIN_PATTERNS
-			.stream()
-			.anyMatch(pattern ->
-				pattern
-					.stream()
-					.map(data::get)
-					.allMatch((@Nullable Mark m) -> m == mark)
-			);
+				.stream()
+				.anyMatch(pattern -> pattern
+						.stream()
+						.map(data::get)
+						.allMatch((@Nullable Mark m) -> m == mark));
 	}
 
 	public boolean isMarkedWith(int pos, @Nullable Mark mark) {
@@ -93,14 +87,12 @@ public class Board {
 
 	public String toString() {
 		return data
-			.stream()
-			.<Character>map(m ->
-				switch (m) {
+				.stream()
+				.<Character>map(m -> switch (m) {
 					case X -> 'X';
 					case O -> 'O';
 					default -> ',';
-				}
-			)
-			.collect(STRING_COLLECTOR);
+				})
+				.collect(STRING_COLLECTOR);
 	}
 }

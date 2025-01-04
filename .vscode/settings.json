@@ -3,7 +3,7 @@
 	"java.configuration.updateBuildConfiguration": "automatic",
 	"editor.formatOnSave": true,
 	"[java]": {
-		"editor.defaultFormatter": "mwpb.java-prettier-formatter"
+		"editor.defaultFormatter": "redhat.java"
 	},
 	"java.dependency.packagePresentation": "hierarchical"
 }

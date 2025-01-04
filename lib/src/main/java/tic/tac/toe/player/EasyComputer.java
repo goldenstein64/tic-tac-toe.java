@@ -16,10 +16,10 @@ public class EasyComputer implements Player {
 	@Override
 	public int getMove(Board board, Mark mark) {
 		var moves = Stream
-			.iterate(0, i -> i + 1)
-			.limit(Board.SIZE)
-			.filter(board::canMark)
-			.toList();
+				.iterate(0, i -> i + 1)
+				.limit(Board.SIZE)
+				.filter(board::canMark)
+				.toList();
 		return moves.get(rng.nextInt(moves.size()));
 	}
 }
