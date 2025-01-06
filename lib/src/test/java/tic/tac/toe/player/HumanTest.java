@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Mark;
-import tic.tac.toe.data.Message.*;
+import static tic.tac.toe.data.Message.*;
 import tic.tac.toe.data.MessageException;
 import tic.tac.toe.util.MockConnection;
 

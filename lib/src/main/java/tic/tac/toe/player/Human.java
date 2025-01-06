@@ -3,7 +3,7 @@ package tic.tac.toe.player;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Connection;
 import tic.tac.toe.data.Mark;
-import tic.tac.toe.data.Message.*;
+import static tic.tac.toe.data.Message.*;
 import tic.tac.toe.data.MessageException;
 
 public class Human implements Player {

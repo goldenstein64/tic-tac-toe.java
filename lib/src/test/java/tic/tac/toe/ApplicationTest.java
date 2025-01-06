@@ -9,7 +9,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import tic.tac.toe.data.Mark;
-import tic.tac.toe.data.Message.*;
+import static tic.tac.toe.data.Message.*;
 import tic.tac.toe.data.MessageException;
 import tic.tac.toe.player.EasyComputer;
 import tic.tac.toe.player.HardComputer;
@@ -191,7 +191,7 @@ public class ApplicationTest {
             var app = new Application(conn);
 
             app.displayWinner(Optional.empty());
-            assertEquals(List.of(MSG_Tied.INSTANCE), conn.outputs);
+            assertEquals(List.of(MSG_Tied), conn.outputs);
         }
 
         @Test

@@ -8,7 +8,7 @@ import java.util.Random;
 import tic.tac.toe.data.Board;
 import tic.tac.toe.data.Connection;
 import tic.tac.toe.data.Mark;
-import tic.tac.toe.data.Message.*;
+import static tic.tac.toe.data.Message.*;
 import tic.tac.toe.data.MessageException;
 import tic.tac.toe.player.Computer;
 import tic.tac.toe.player.EasyComputer;
@@ -93,6 +93,6 @@ public class Application {
     public void displayWinner(Optional<Mark> winner) {
         winner.ifPresentOrElse(
                 (mark) -> conn.print(new MSG_PlayerWon(mark)),
-                () -> conn.print(MSG_Tied.INSTANCE));
+                () -> conn.print(MSG_Tied));
     }
 }

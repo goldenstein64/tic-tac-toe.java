@@ -10,12 +10,11 @@ public sealed interface Message {
 	public final record MSG_PlayerWon(Mark winner) implements Message {
 	}
 
-	public final class MSG_Tied implements Message {
-		public static final MSG_Tied INSTANCE = new MSG_Tied();
-
-		private MSG_Tied() {
-		};
+	public enum StaticMessage implements Message {
+		MSG_Tied
 	}
+
+	public static StaticMessage MSG_Tied = StaticMessage.MSG_Tied;
 
 	public final record MSG_Board(String pattern) implements Message {
 	}
