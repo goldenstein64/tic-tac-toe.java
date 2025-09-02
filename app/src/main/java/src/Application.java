@@ -70,7 +70,7 @@ public class Application {
         } else if (message instanceof ERR_SpaceOccupied msg) {
           return String.format("Slot %d is occupied!", msg.choice());
         } else {
-          throw new RuntimeException("Message not recognized!");
+          throw new RuntimeException(String.format("Unknown message type '%s'", message.getClass().getSimpleName()));
         }
       }
     };
