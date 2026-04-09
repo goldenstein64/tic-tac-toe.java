@@ -45,7 +45,7 @@ public class MediumComputer extends Computer {
 					return WIN_PATTERNS_FOR
 							.get(i)
 							.stream()
-							.anyMatch(pattern -> pattern.stream().map(j -> board.get(j)).allMatch(m -> m == mark));
+							.anyMatch(pattern -> pattern.stream().map(board::get).allMatch(m -> m == mark));
 				})
 				.toList();
 
