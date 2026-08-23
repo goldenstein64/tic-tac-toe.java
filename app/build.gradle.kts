@@ -7,7 +7,7 @@
  */
 
 plugins {
-    id 'application'
+    id("application")
 }
 
 repositories {
@@ -15,17 +15,21 @@ repositories {
     mavenCentral()
 }
 
+group = "io.github.goldenstein64"
+version = "0.0.1-SNAPSHOT"
+
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+	testImplementation(platform("org.junit:junit-bom:6.1.3"))
+	testImplementation("org.junit.jupiter:junit-jupiter")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // This dependency is used by the application.
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation("com.google.guava:guava:31.1-jre")
 
     // https://mvnrepository.com/artifact/org.javatuples/javatuples
-    implementation 'org.javatuples:javatuples:1.2'
+    implementation("org.javatuples:javatuples:1.2")
 
-    implementation project(':lib')
+    implementation(project(":lib"))
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -36,14 +40,17 @@ java {
 }
 
 application {
-    mainClass = 'io.github.goldenstein64.tic.tac.toe.console.Application'
+    mainClass = "io.github.goldenstein64.tic.tac.toe.console.Application"
 }
 
-run {
-    standardInput = System.in
-}
+// run {
+//     // standardInput = System.in
+// }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+testing {
+	suites {
+		named<JvmTestSuite>("test") {
+			useJUnitJupiter("6.1.3")
+		}
+	}
 }
